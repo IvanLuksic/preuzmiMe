@@ -1,12 +1,12 @@
 import './App.css';
+import  Frame from './components/frame';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        
+      <Frame>
 
-      </header>
+      </Frame>  
     </div>
   );
 }
