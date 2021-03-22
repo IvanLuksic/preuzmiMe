@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles} from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Navbar from './navbar'
+import ContentRow from './contentRow';
 
 
 const useStyles = makeStyles((theme) => ({
      mainFrame:{
          background: "white",
-         width: "97%",
-         height: "95%",
-         borderRadius: "1em",
+         width: "98.5%",
+         height: "97%",
+         borderRadius: "0.8em",
      },
      [theme.breakpoints.down('md')]: {
          mainFrame: {
-            height: "97%"
+            width: "96%"
          },
         minHeight: "100vh",
         overflowY: "show",
@@ -27,8 +30,9 @@ export default function Frame() {
     const classes= useStyles();
 
     return (
-        <div className={classes.mainFrame}>
-            
-        </div>
+        <Paper className={classes.mainFrame} variant="outlined" >
+            <Navbar/>
+            <ContentRow/>
+        </Paper>
     )
 }
