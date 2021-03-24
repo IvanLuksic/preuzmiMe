@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid'
 import { makeStyles} from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import Dropzone from 'react-dropzone'
-import {useDropzone} from 'react-dropzone';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +47,7 @@ export default function UploadOrDrag() {
     
     return (
             <Grid className={classes.uploadGrid}  item xs={11} md={6} lg={5} container>
-                <Dropzone noClick={true} onDrop={acceptedFiles => console.log(acceptedFiles)}>
+                <Dropzone noClick={true} open onDrop={acceptedFiles => console.log(acceptedFiles)}>
                     {({getRootProps, getInputProps}) => (
                         <section style={{fontSize: "25px",margin:"auto", width: "100%", height: "100%"}}>
                         <div {...getRootProps({...classes.dropzoneStyles})} style={{height: "100%", }}>

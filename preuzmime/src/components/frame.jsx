@@ -3,6 +3,7 @@ import { makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Navbar from './navbar'
 import ContentRow from './contentRow';
+import CookieDial from './cookieDial';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +34,7 @@ export default function Frame() {
         <Paper className={classes.mainFrame} variant="outlined" >
             <Navbar/>
             <ContentRow/>
+            <CookieDial/>
         </Paper>
     )
 }

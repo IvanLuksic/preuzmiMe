@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid'
 import { makeStyles} from '@material-ui/core/styles';
+import PasswordOption from './options/passwordOption';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +20,7 @@ export default function OptionsWrapper() {
 
             <Grid className={classes.optionsGrid} item xs={11} md={4} lg={3} container>
                 <p style={{fontSize: "25px",margin:"auto", verticalAlign:"middle"}}>Ovdje idu neke opcije</p>
+                <PasswordOption />
             </Grid>
 
     )
