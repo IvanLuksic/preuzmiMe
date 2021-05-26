@@ -12,7 +12,7 @@ module.exports = class upload{
 
     }
 
-    async saveFileParameters(type,path, timeUploaded, timeExpires,password,dlNumber) {
+    async saveFileParameters(type,path, timeUploaded, timeExpires,password,dlNumber, uploaderId) {
         
         try {
 
@@ -28,8 +28,17 @@ module.exports = class upload{
                 if(!linkSearch){
                     
                     let fileInfo = await this.FileProperties.create({
+                        
                         link: link,
-
+                        path: path,
+                        type: type,
+                        time_uploaded: timeUploaded,
+                        time_expires: timeExpires,
+                        password: passwordEncrypted,
+                        num_dl_left: dlNumber,
+                        uploader_id: uploaderId,
+                        createdAt: new Date(),
+                        updatedAt: new Date()
 
                     })
                 
