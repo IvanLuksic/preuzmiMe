@@ -1,4 +1,6 @@
 require("dotenv").config();
+
+//Config za sequelize povezivanje s bazom
 module.exports = {
   development: {
     use_env_variable: "DATABASE_URL",
