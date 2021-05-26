@@ -5,7 +5,7 @@ const {logger} = require('./logger');
 
 module.exports = {
 
-    loadLoaders: async function(){
+    callLoaders: async function(){
         try {
             
             await SequelizeDBConnection(logger);
