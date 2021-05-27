@@ -1,5 +1,7 @@
 const {sequelize} = require('../models');
 const { QueryTypes } = require('sequelize');
+const { bcrypt } = require('../config');
+const deleteFile = require('./delete');
 
 module.exports = class upload{
  
@@ -24,22 +26,22 @@ module.exports = class upload{
             if(!linkExistance){
                 
                 this.logger.info("That link doesn't exist");
+                return 1;
 
             }else if(linkExistance && (linkExistance.time_expires < new Date() || (linkExistance.num_dl_left && linkExistance.num_dl_left <= 0))){
 
                 this.logger.info("The link has expired or has been downloaded too many times")
                 deleteFile(link);
+                return 2; 
 
             }else if(linkExistance.num_dl_left && !linkExistance.pasword && linkExistance.num_dl_left > 0) {
 
-                this.download(link);
-                updateDlNum();
+                return 3//this.download(link);
+                        //updateDlNum();
 
             } else if(linkExistance.pasword) {
-
-               let passwordCandidate = requestPassword()
-               
-               
+ 
+               return 4 //let passwordCandidate = requestPassword()
 
             }
 
@@ -70,8 +72,24 @@ module.exports = class upload{
             this.logger.error("Error in download service");
             throw(error)
         }
-        
 
+    }
+
+    async checkPassword(link, password){
+
+        const fileToCheck = await this.FileProperties.findOne({
+            where: {link: link}
+            });
+
+        if(bcrypt.compare(password,fileToCheck.password)){
+         
+            return true;
+       
+        } else {
+            
+            return false;
+
+        }
 
     }
 }    

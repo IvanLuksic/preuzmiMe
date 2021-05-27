@@ -24,29 +24,22 @@ module.exports = class upload{
             const passwordEncrypted = encrypt(password);
 
             try {
-                
-                if(!linkSearch){
                     
-                    let fileInfo = await this.FileProperties.create({
-                        
-                        link: link,
-                        path: path,
-                        type: type,
-                        time_uploaded: timeUploaded,
-                        time_expires: timeExpires,
-                        password: passwordEncrypted,
-                        num_dl_left: dlNumber,
-                        uploader_id: uploaderId,
-                        createdAt: new Date(),
-                        updatedAt: new Date()
+                let fileInfo = await this.FileProperties.create({
+                    
+                    link: link,
+                    path: path,
+                    type: type,
+                    time_uploaded: timeUploaded,
+                    time_expires: timeExpires,
+                    password: passwordEncrypted,
+                    num_dl_left: dlNumber,
+                    uploader_id: uploaderId,
+                    createdAt: new Date(),
+                    updatedAt: new Date()
 
-                    })
-                
-                }else{
+                })  
 
-                    this.logger.info()
-
-                }
                 this.logger.info('File parameters have been saved');
             
             } catch (error) {
