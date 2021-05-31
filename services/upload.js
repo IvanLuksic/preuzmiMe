@@ -44,10 +44,12 @@ module.exports = class upload{
             } catch (error) {
                 
                 this.logger.error('Error in saving file parameters to database');
-                throw(error)
+                throw(error);
             
             }
    
+            return link;
+
         } catch (error) {
            
             this.logger.error('Error in saving file parameters');
