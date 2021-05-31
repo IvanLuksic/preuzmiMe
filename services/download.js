@@ -1,6 +1,6 @@
 const {sequelize} = require('../models');
 const { QueryTypes } = require('sequelize');
-const { bcrypt } = require('../config');
+const { bcrypt } = require('bcrypt');
 const deleteFile = require('./delete');
 
 module.exports = class upload{
@@ -36,9 +36,9 @@ module.exports = class upload{
 
             }else if(linkExistance.num_dl_left && !linkExistance.pasword && linkExistance.num_dl_left > 0) {
 
+                updateDlNum(linkExistance.link, linkExistance.num_dl_left - 1);
                 return 3//this.download(link);
-                        //updateDlNum();
-
+                        
             } else if(linkExistance.pasword) {
  
                return 4 //let passwordCandidate = requestPassword()
@@ -70,26 +70,57 @@ module.exports = class upload{
         } catch (error) {
             
             this.logger.error("Error in download service");
+            throw(error);
+
+        }
+
+    }
+
+    async updateDlNum(link,num_dl_left){
+
+        try {
+            const fileToUpdate = await this.FileProperties.update({num_dl_left: num_dl_left},{
+            where: {link: link}
+            });
+        
+            if(fileToUpdate.num_dl_left <= 0){
+                deleteFile(link)
+            }
+
+        } catch (error) {
+         
+            this.logger.error("Error in download service");
             throw(error)
+
         }
 
     }
 
     async checkPassword(link, password){
 
-        const fileToCheck = await this.FileProperties.findOne({
-            where: {link: link}
-            });
-
-        if(bcrypt.compare(password,fileToCheck.password)){
-         
-            return true;
-       
-        } else {
+        try {
             
-            return false;
+            const fileToCheck = await this.FileProperties.findOne({
+                where: {link: link}
+                });
+
+            if(bcrypt.compare(password,fileToCheck.password)){
+            
+                return true;
+        
+            } else {
+                
+                return false;
+
+            }
+
+        } catch (error) {
+            
+            this.logger.error("Error in checking for password");
+            throw(error)
 
         }
+
 
     }
 }    

@@ -30,6 +30,6 @@ const http=morgan('dev',{
 })
 
 module.exports={
-    httplogger:http,
+    http:http,
     logger:logger
 }

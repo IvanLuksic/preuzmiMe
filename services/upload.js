@@ -18,7 +18,6 @@ module.exports = class upload{
 
             //Poziva funkciju za generiranje linka
             const link = generatelink();
-            this.logger.info("Link je preuzmi.me/", link);
 
             //Poziv funkcije koja enkriptira poslanu šifru
             const passwordEncrypted = encrypt(password);
