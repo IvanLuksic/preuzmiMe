@@ -1,5 +1,5 @@
 const {logger} = require('../../loaders/logger');
-const uploadClassInstance = require('../../services');
+const {uploadClassInstance} = require('../../services');
 
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
 
         try {
             
-            let link = await uploadClassInstance.saveFileParameters(req.file.type, req.file.path, req.body.timeUploaded, req.body.timeExpires, req.body.password, req.body.dlNumber, req.session.userId)
+            let link = await uploadClassInstance.saveFileParameters(req.file.mimetype, req.file.path, req.body.timeUploaded, req.body.timeExpires, req.body.password, req.body.dlNumber, req.body.userId)
 
             res.json(link);
 

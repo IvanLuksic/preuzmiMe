@@ -7,7 +7,7 @@ module.exports = class upload{
  
     constructor(fileProperties,logger){
         
-        this.fileProperties = fileProperties,
+        this.FileProperties = fileProperties,
         this.logger = logger
 
     }
@@ -17,10 +17,14 @@ module.exports = class upload{
         try {
 
             //Poziva funkciju za generiranje linka
-            const link = generatelink();
+            const link = await generatelink();
 
             //Poziv funkcije koja enkriptira poslanu šifru
-            const passwordEncrypted = encrypt(password);
+            const passwordEncrypted = null;
+
+            if(password){
+                passwordEncrypted = await encrypt(password);
+            }
 
             try {
                     

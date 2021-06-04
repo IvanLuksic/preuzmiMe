@@ -28,20 +28,27 @@ module.exports = class upload{
                 this.logger.info("That link doesn't exist");
                 return 1;
 
-            }else if(linkExistance && (linkExistance.time_expires < new Date() || (linkExistance.num_dl_left && linkExistance.num_dl_left <= 0))){
+            }else if(linkExistance && (linkExistance.time_expires < new Date() || (linkExistance.num_dl_left != null && linkExistance.num_dl_left <= 0))){
 
                 this.logger.info("The link has expired or has been downloaded too many times")
                 deleteFile(link);
                 return 2; 
 
-            }else if(linkExistance.num_dl_left && !linkExistance.pasword && linkExistance.num_dl_left > 0) {
+            }else if(linkExistance.num_dl_left && !linkExistance.password && linkExistance.num_dl_left > 0) {
 
-                updateDlNum(linkExistance.link, linkExistance.num_dl_left - 1);
-                return 3//this.download(link);
+                this.updateDlNum(linkExistance.link, linkExistance.num_dl_left - 1);
+
+                let fileInfo = {path: linkExistance.path, type: linkExistance.type};
+
+                return fileInfo;
                         
-            } else if(linkExistance.pasword) {
+            } else if(linkExistance.password) {
  
-               return 4 //let passwordCandidate = requestPassword()
+               return 3 //let passwordCandidate = requestPassword()
+
+            } else {
+
+                this.logger.info("Nije nista u downloadu" + linkExistance.num_dl_left)
 
             }
 
@@ -50,27 +57,6 @@ module.exports = class upload{
             
             this.logger.error("Error in checking for properties");
             throw(error)
-
-        }
-
-    }
-
-    async download(link){
-
-        try {
-            
-            const fileToDl = await this.FileProperties.findOne({
-            where: {link: link}
-            });
-
-            let fileInfo = {path: fileToDl.path, type: fileToDl.type};
-
-            return fileInfo;
-
-        } catch (error) {
-            
-            this.logger.error("Error in download service");
-            throw(error);
 
         }
 
