@@ -5,12 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
-    
+    inputOption: {
+        maxWidth: "40%"
+    }
 
 }));
 
 
-export default function PasswordOption(props) {
+export default function DownloadOption(props) {
 const classes = useStyles();
 
     return (
@@ -18,8 +20,8 @@ const classes = useStyles();
             
             <Grid container direction="row" justify="space-between" alignItems="center">
             
-                <p className={classes.optionText}>Zaporka: </p>
-                <TextField className={classes.inputOption} type="password" id="zaporka" onChange={ (e) => props.setPasswordO(e.target.value)} label="Unesite zaporku" variant="filled" />
+                <p className={classes.optionText}>Broj preuzimanja:</p>
+                <TextField className={classes.inputOption} type="number" id="numOfDl" label="Unesite broj" onChange={ (e) => props.setDownloadO(e.target.value)} variant="filled" />
 
             </Grid>
 

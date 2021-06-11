@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import Navbar from './navbar'
 import ContentRow from './contentRow';
 import CookieDial from './cookieDial';
+import Download from './download'
+import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
      },
      [theme.breakpoints.down('md')]: {
          mainFrame: {
-            width: "96%"
+            width: "97%",
+            overflowY: "scroll",
+            overflowX: "hidden"
          },
-        minHeight: "100vh",
-        overflowY: "show",
 
       },
       [theme.breakpoints.up('md')]: {
@@ -26,15 +28,23 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
 
-export default function Frame() {
+export default function Frame(props) {
 
     const classes= useStyles();
 
     return (
+    <Router>
         <Paper className={classes.mainFrame} variant="outlined" >
+        
+            <Switch>
+                 <Route exact path="/" children={<ContentRow/>} />
+                 <Route path="/:id" children={<Download/>} />
+            </Switch>
+        
             <Navbar/>
-            <ContentRow/>
+            
             <CookieDial/>
         </Paper>
+        </Router>
     )
 }

@@ -1,8 +1,8 @@
-import React from 'react';
+import {React,useState} from 'react';
 import Grid from '@material-ui/core/Grid'
 import { makeStyles} from '@material-ui/core/styles';
 import UploadOrDrag from './uploadOrDrag'
-import OptionsWrapper from './optionsWrapper'
+import OptionsContainer from './optionsContainer'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,18 +15,19 @@ const useStyles = makeStyles((theme) => ({
     },
     mainGrid:{
         flexGrow: 1,
-        marginTop:"25vh"
+        marginTop:"22.5vh"
     },
 }));
 
 export default function ContentRow() {
+    const [file,setFile] = useState(null);
     const classes = useStyles();
 
     return (
 
         <Grid className={classes.mainGrid} container direction="row" justify="center" alignItems="center" spacing={3}>
-           <UploadOrDrag/>
-            <OptionsWrapper/>
+           <UploadOrDrag setFileUoD={setFile}/>
+            <OptionsContainer fileO={file}/>
         </Grid> 
     )
 }

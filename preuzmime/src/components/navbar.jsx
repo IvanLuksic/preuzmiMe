@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
        image: {
-        height: theme.spacing(5),
-        width: theme.spacing(12),
+        height: theme.spacing(7),
+        width: theme.spacing(15),
         
         },
         imageLink:{
@@ -49,10 +49,10 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: "8%",
         },
         buttonPostavi:{
-            height: theme.spacing(5),
+            height: theme.spacing(7),
             width: theme.spacing(25),
             maxHeight: theme.spacing(3),
-            marginTop: "5%",
+            marginTop: "4%",
             marginRight: "8%",
         }
     },
