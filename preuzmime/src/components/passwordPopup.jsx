@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState}from 'react';
 import {Button, Dialog,DialogContent,DialogTitle, makeStyles, Grid}from'@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
@@ -64,6 +64,8 @@ const useStyles=makeStyles(theme =>({
 
 export default function PasswordPopup(props){
 
+    const [value,setValue] = useState()
+
     const classes=useStyles();
 
 
@@ -80,8 +82,8 @@ export default function PasswordPopup(props){
 
                             <Grid container direction="row" justify="center" alignItems="center">
                         
-                                <TextField id="filled-basic" label="Zaporka datoteke" type="password" size="small" className={classes.linkContainer} variant="filled" />
-                                <Button variant="contained" size="large" className={classes.copyButton}>Unesi</Button> 
+                                <TextField id="filled-basic" label="Zaporka datoteke" type="password" size="small" onChange={(event)=>setValue(event.target.value)} className={classes.linkContainer} variant="filled" />
+                                <Button variant="contained" size="large" className={classes.copyButton} onClick={()=>{props.setPass(value); props.setOpenPopup(false)}}>Unesi</Button> 
                         
                             </Grid> 
 

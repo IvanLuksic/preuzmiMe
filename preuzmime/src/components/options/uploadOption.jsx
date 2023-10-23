@@ -44,21 +44,36 @@ export default function UploadOption(props) {
 
     const postFile = () => {
 
-        const requestOptions = {
+        let data = new FormData();
+
+        let dateExpires = new Date();
+
+        dateExpires.setHours( dateExpires.getHours() + props.expire );
+
+        data.append("password", props.password);
+        data.append("timeUploaded", new Date());
+        data.append("timeExpires", dateExpires);
+        data.append("file", props.file );
+        data.append("dlNumber", props.download);
+        data.append("userId", null);
+
+        let requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: 'React POST Request Example' })
+            headers: { },
+            body: data
         }
+
+        fetch('http://localhost:5000/api/upload', requestOptions).then(response => response.json()).then(response => setLink("localhost:3000/"+response)).then(setOpenPopup(true));
 
     }
 
 
     return (
         <React.Fragment>
-            <LinkPopup setOpenPopup={setOpenPopup} openPopup={openPopup} link="preuzmi.me/asdfsdfsdfgs" />
+            <LinkPopup setOpenPopup={setOpenPopup} openPopup={openPopup} link={link} />
              <FormControlLabel control={<Checkbox checked={state.checked} onChange={handleChange} name="checked" color="primary"/> } 
              label={(<p className={classes.checkbox}>Prihvaćam <a className={classes.link} rel="noreferrer" href="http://www.google.com" target="_blank" >opće uvjete korištenja</a></p>)} />
-             <Button color="primary" className={classes.uploadButton} onClick={() => {setOpenPopup(true)}} disabled={!state.checked} variant="contained">Prenesi datoteku</Button>
+             <Button color="primary" className={classes.uploadButton} onClick={() => {postFile()}} disabled={!state.checked} variant="contained">Prenesi datoteku</Button>
         </React.Fragment>
     )
 }

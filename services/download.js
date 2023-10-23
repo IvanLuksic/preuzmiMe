@@ -1,9 +1,10 @@
 const {sequelize} = require('../models');
 const { QueryTypes } = require('sequelize');
-const { bcrypt } = require('bcrypt');
+const bcrypt = require('bcrypt');
+
 const deleteFile = require('./delete');
 
-module.exports = class upload{
+module.exports = class download{
  
     constructor(fileProperties,logger){
         
@@ -12,9 +13,11 @@ module.exports = class upload{
 
     }
 
-    async checkForProperties(link){
+    async checkForProperties(link, suppliedPass){
 
         try {
+
+            this.logger.warn(suppliedPass)
             
             const linkExistance = await this.FileProperties.findOne({
                 where: {link: link}
@@ -42,13 +45,32 @@ module.exports = class upload{
 
                 return fileInfo;
                         
-            } else if(linkExistance.password) {
- 
-               return 3 //let passwordCandidate = requestPassword()
+            } else if(linkExistance.password && suppliedPass != null) {
 
-            } else {
+                this.logger.warn(typeof(suppliedPass))
+                
+                let isCorrect = this.checkPassword(linkExistance.password, suppliedPass)
+                
+                if(isCorrect){
+                    
+                    this.updateDlNum(linkExistance.link, linkExistance.num_dl_left - 1);
 
-                this.logger.info("Nije nista u downloadu" + linkExistance.num_dl_left)
+                    let fileInfo = {path: linkExistance.path, type: linkExistance.type};
+
+                    return fileInfo;
+               } else {
+                    return {error: 1}
+               }
+               
+               
+
+            } else if(linkExistance.password && !suppliedPass){
+
+                return {error: 1}
+
+            }else {
+
+                this.logger.info("Nije nista u downloadu " + linkExistance.num_dl_left)
 
             }
 
@@ -82,27 +104,28 @@ module.exports = class upload{
 
     }
 
-    async checkPassword(link, password){
+    async checkPassword(filePass, password){
 
         try {
             
-            const fileToCheck = await this.FileProperties.findOne({
-                where: {link: link}
-                });
-
-            if(bcrypt.compare(password,fileToCheck.password)){
-            
-                return true;
-        
-            } else {
-                
-                return false;
-
-            }
+            bcrypt.compare(password, filePass, (err, result) => {
+                if (err) {
+                  // Handle error
+                  console.error('Error comparing passwords:', err);
+                } else if (result) {
+                  // Passwords match
+                  console.log('Password is correct');
+                  return true
+                } else {
+                  // Passwords do not match
+                  console.log('Password is incorrect');
+                  return false
+                }
+              });
 
         } catch (error) {
             
-            this.logger.error("Error in checking for password");
+            this.logger.error("Error in checking for password" + filePass + " " + password);
             throw(error)
 
         }

@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
             width: theme.spacing(25),
             maxHeight: theme.spacing(3),
             marginTop: "4%",
-            marginRight: "8%",
+            marginRight: "6%",
         }
     },
   }));

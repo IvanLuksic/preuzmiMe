@@ -8,12 +8,12 @@ module.exports = {
 
         
         try {
-        
-            let downloadResponse = await downloadClassInstance.checkForProperties(req.params.unique_URL);
+            
+            let downloadResponse = await downloadClassInstance.checkForProperties(req.params.unique_URL, req.body.password);
 
             if(downloadResponse.path){
 
-                return res.sendFile(downloadResponse.path, {root: 'C://Users/Ivan/desktop/Projekti/preuzmiMe/' })
+                return res.download('C://Users/Ivan/desktop/Projekti/preuzmiMe/'+downloadResponse.path, downloadResponse.path.substring(downloadResponse.path.indexOf('-')+1))
 
             }
 

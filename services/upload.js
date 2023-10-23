@@ -20,9 +20,11 @@ module.exports = class upload{
             const link = await generatelink();
 
             //Poziv funkcije koja enkriptira poslanu šifru
-            const passwordEncrypted = null;
+            let passwordEncrypted = null;
 
-            if(password){
+            this.logger.info(password)
+
+            if(password != null && password != "null"){
                 passwordEncrypted = await encrypt(password);
             }
 

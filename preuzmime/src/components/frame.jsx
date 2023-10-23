@@ -43,7 +43,6 @@ export default function Frame(props) {
         
             <Navbar/>
             
-            <CookieDial/>
         </Paper>
         </Router>
     )
